@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vesper — Made up. Made in London.</title>
+<meta name="description" content="Small-batch colour and skin goods, made and filled by hand in Hackney, London. Cruelty-free, vegan, refillable.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect x='10' y='17' width='12' height='13' rx='2' fill='%23221D16'/><rect x='9' y='13' width='14' height='5' fill='%23C6A15B'/><path d='M12 13 V7 Q12 4 14 3 L19 6 V13 Z' fill='%23B23A3F'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+<style>
+/* ============ foundations ============ */
+:root{
+  --cream:#F5EFE2;
+  --cream-2:#ECE3D0;
+  --ink:#221D16;
+  --ink-soft:rgba(34,29,22,.62);
+  --line:rgba(34,29,22,.16);
+  --ox:#6C2732;
+  --metal:#C6A15B;
+  --serif:'Fraunces',Georgia,serif;
+  --sans:'Instrument Sans',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--cream);color:var(--ink);font:400 16px/1.5 var(--sans);-webkit-font-smoothing:antialiased}
+svg{display:block}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+ul{list-style:none}
+::selection{background:var(--ox);color:var(--cream)}
+:focus-visible{outline:2px solid var(--ox);outline-offset:3px;border-radius:2px}
+img{max-width:100%}
+.wrap{max-width:1240px;margin:0 auto;padding:0 clamp(20px,4vw,56px)}
+#index,#ritual,#notes,#post{scroll-margin-top:92px}
+
+/* paper grain */
+body::after{content:'';position:fixed;inset:0;z-index:600;pointer-events:none;opacity:.05;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='240' height='240' filter='url(%23n)'/></svg>")}
+
+/* reveal */
+[data-reveal]{opacity:0;transform:translateY(26px);transition:opacity .8s cubic-bezier(.22,1,.3,1) var(--d,0s),transform .8s cubic-bezier(.22,1,.3,1) var(--d,0s)}
+[data-reveal].rev-in{opacity:1;transform:none}
+
+/* ============ ticker + header ============ */
+.ticker{background:var(--ink);color:rgba(245,239,226,.85);font:600 10px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;padding:9px 16px;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+header{position:sticky;top:0;z-index:120;background:rgba(245,239,226,.9);backdrop-filter:blur(10px);border-bottom:1px solid transparent;transition:border-color .3s}
+header.sc{border-bottom-color:var(--line)}
+.h-in{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:76px}
+.logo{font:500 21px var(--serif);letter-spacing:.26em;justify-self:start}
+.nav{display:flex;gap:36px;justify-content:center}
+.nav a{font:600 11px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);position:relative;padding:6px 0;transition:color .25s}
+.nav a::after{content:'';position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--ink);transform:scaleX(0);transform-origin:left;transition:transform .3s}
+.nav a:hover{color:var(--ink)}
+.nav a:hover::after{transform:scaleX(1)}
+.h-actions{justify-self:end;display:flex;gap:12px;align-items:center}
+.bagbtn{display:inline-flex;gap:9px;align-items:center;font:600 11px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;padding:11px 16px;border:1px solid var(--line);border-radius:999px;transition:border-color .3s}
+.bagbtn:hover{border-color:var(--ink)}
+.bagbtn svg{width:15px;height:15px}
+.bagbtn b{color:var(--ox);display:inline-block;font-weight:700}
+.bagbtn b.bump{animation:bump .45s}
+@keyframes bump{35%{transform:scale(1.5)}}
+.mbtn{display:none;flex-direction:column;gap:5px;width:44px;height:44px;align-items:center;justify-content:center;border:1px solid var(--line);border-radius:999px}
+.mbtn span{display:block;width:16px;height:1.5px;background:var(--ink)}
+.mnav{display:none;position:absolute;top:100%;left:0;right:0;background:var(--cream);border-bottom:1px solid var(--line);padding:4px 24px 16px}
+header.menu-open .mnav{display:block}
+.mnav a{display:block;font:400 26px var(--serif);padding:12px 0;border-bottom:1px solid var(--line)}
+
+/* ============ hero ============ */
+.hero{padding:56px 0 90px;min-height:calc(100svh - 112px);display:flex;align-items:center}
+.hero-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:clamp(44px,6vw,84px);align-items:center;width:100%}
+.eyebrow{font:600 11px/1 var(--sans);letter-spacing:.24em;text-transform:uppercase;color:var(--ox)}
+h1{font-family:var(--serif);font-weight:400;font-optical-sizing:auto;font-size:clamp(3.3rem,7.8vw,6.9rem);line-height:.96;letter-spacing:-.02em;margin:26px 0 24px}
+h1 em{font-style:italic;color:var(--ox)}
+.lede{max-width:46ch;font-size:16.5px;line-height:1.65;color:var(--ink-soft)}
+.cta{display:flex;align-items:center;gap:26px;margin:36px 0 46px;flex-wrap:wrap}
+.btn-primary{display:inline-flex;align-items:center;gap:10px;background:var(--ink);color:var(--cream);border:1px solid var(--ink);border-radius:999px;padding:0 26px;height:54px;font:600 12px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;transition:background .3s,border-color .3s,transform .15s}
+.btn-primary svg{width:12px;height:12px}
+.btn-primary:hover{background:var(--ox);border-color:var(--ox)}
+.btn-primary:active{transform:scale(.97)}
+.btn-ghost{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:54px;padding:0 24px;border:1px solid var(--line);border-radius:999px;font:600 12px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;transition:border-color .3s,background .3s,color .3s}
+.btn-ghost:hover{border-color:var(--ink);background:var(--ink);color:var(--cream)}
+.link-arrow{display:inline-flex;align-items:center;gap:9px;font:600 11px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);transition:color .25s}
+.link-arrow svg{width:11px;height:11px;transition:transform .3s}
+.link-arrow:hover{color:var(--ink)}
+.link-arrow:hover svg{transform:translateY(3px)}
+.shades-label{font:600 10px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:14px}
+.chips{display:flex;gap:10px}
+.schip{width:62px;text-align:center}
+.schip-colour{display:block;height:44px;border-radius:3px;border:1px solid rgba(34,29,22,.25);transition:transform .25s,box-shadow .25s}
+.schip-name{display:block;font:600 9px/1 var(--sans);letter-spacing:.08em;text-transform:uppercase;margin-top:8px;color:var(--ink-soft);transition:color .25s}
+.schip.on .schip-colour{transform:translateY(-4px);box-shadow:0 0 0 3px var(--cream),0 0 0 4px var(--ink)}
+.schip.on .schip-name{color:var(--ink)}
+.shade-blurb{font:italic 400 19px/1.35 var(--serif);color:var(--ox);margin-top:18px}
+
+/* hero stage — the fanlight arch */
+.stage{width:min(440px,100%);justify-self:end}
+.arch-wrap{position:relative}
+.arch-wrap::before{content:'';position:absolute;inset:-14px;border:1px solid var(--line);border-radius:999px 999px 16px 16px;pointer-events:none}
+.arch{width:100%;aspect-ratio:.78;border-radius:999px 999px 16px 16px;display:flex;align-items:center;justify-content:center;background:#E8CFC7;transition:background-color .5s ease}
+.lip{width:66%;height:auto;margin-top:26px;filter:drop-shadow(0 16px 18px rgba(34,29,22,.16));will-change:transform}
+.chipcard{position:absolute;top:88px;left:-32px;width:152px;background:var(--cream);border:1px solid var(--line);padding:10px;transform:rotate(6deg);box-shadow:0 12px 28px rgba(34,29,22,.14);will-change:transform}
+.cc-colour{height:58px;border-radius:2px;border:1px solid rgba(34,29,22,.18);transition:background-color .5s}
+.cc-meta{padding:10px 2px 4px}
+.cc-meta em{display:block;font:italic 400 21px/1.1 var(--serif)}
+.cc-meta span{display:block;font:600 8.5px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);margin-top:7px}
+.spark{position:absolute;color:var(--ink);animation:tw 6s ease-in-out infinite alternate}
+.s1{top:-10px;left:12%;width:18px}
+.s2{bottom:118px;right:-18px;width:11px;animation-delay:-3s}
+@keyframes tw{from{opacity:.2;transform:rotate(0) scale(.85)}to{opacity:.85;transform:rotate(35deg) scale(1)}}
+.arch-cap{margin-top:28px;text-align:center;font:600 10px/1.6 var(--sans);letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft)}
+
+/* ============ oxblood marquee band ============ */
+.band{background:var(--ox);color:var(--cream);padding:16px 0;overflow:hidden}
+.band-track{display:flex;width:max-content;animation:scrollx 30s linear infinite}
+.band:hover .band-track{animation-play-state:paused}
+.band-half{display:flex}
+.band-half span{font:600 12px/1 var(--sans);letter-spacing:.22em;text-transform:uppercase;white-space:nowrap}
+.band-half span::after{content:'·';margin:0 2.2rem;opacity:.55}
+@keyframes scrollx{to{transform:translateX(-50%)}}
+
+/* ============ section scaffolding ============ */
+.kicker{font:600 11px/1 var(--sans);letter-spacing:.22em;text-transform:uppercase;color:var(--ox);display:flex;align-items:center;gap:16px;margin-bottom:14px}
+.kicker::after{content:'';flex:1;height:1px;background:var(--line)}
+.sec-head{display:grid;grid-template-columns:1fr 340px;gap:40px;align-items:end;margin:16px 0 38px}
+.sec-head h2{font:400 clamp(2.4rem,4.6vw,3.7rem)/1.02 var(--serif);letter-spacing:-.015em}
+.sec-head p{font-size:14px;line-height:1.65;color:var(--ink-soft)}
+
+/* ============ the index ============ */
+.index{padding:96px 0 104px}
+.rows{border-top:1px solid var(--line)}
+.row{display:grid;grid-template-columns:64px 1.15fr .85fr 96px 52px;gap:24px;align-items:center;min-height:106px;padding:18px 0;border-bottom:1px solid var(--line);transition:background .3s}
+.row:hover{background:var(--cream-2)}
+.row-no{font:italic 400 17px/1 var(--serif);color:var(--ink-soft)}
+.row-name h3{font:400 clamp(1.25rem,2.2vw,1.6rem)/1.1 var(--serif);letter-spacing:-.01em;transition:font-style .15s,color .25s}
+.row:hover .row-name h3{font-style:italic;color:var(--ox)}
+.row-cat{display:flex;align-items:center;gap:8px;font:600 10.5px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);margin-top:8px}
+.row-cat .dot{width:9px;height:9px;border-radius:50%;border:1px solid rgba(34,29,22,.3);flex:0 0 9px}
+.row-note{font-size:13.5px;line-height:1.55;color:var(--ink-soft)}
+.row-price{font:600 15px/1 var(--sans);text-align:right}
+.addbtn{width:46px;height:46px;border:1px solid var(--ink);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:background .25s,border-color .25s,color .25s,transform .15s;justify-self:end}
+.addbtn svg{width:13px;height:13px}
+.addbtn:hover{background:var(--ink);color:var(--cream)}
+.addbtn:active{transform:scale(.9)}
+.addbtn .i-check{display:none}
+.addbtn.did{background:var(--ox);border-color:var(--ox);color:var(--cream)}
+.addbtn.did .i-check{display:block}
+.addbtn.did .i-plus{display:none}
+
+/* cursor-follow preview */
+.peek{position:fixed;left:0;top:0;width:252px;height:322px;z-index:90;pointer-events:none;opacity:0;transition:opacity .25s ease}
+.peek.on{opacity:1}
+.pcard{position:absolute;top:0;left:0;right:0;background:var(--cream);border:1px solid var(--line);box-shadow:0 18px 44px rgba(34,29,22,.18);opacity:0;transform:scale(.97) translateY(8px);transition:opacity .22s,transform .22s}
+.pcard.on{opacity:1;transform:none}
+.pmedia{height:264px;border-radius:126px 126px 0 0;display:flex;align-items:flex-end;justify-content:center;overflow:hidden;transition:background-color .5s}
+.pmedia svg{height:88%;width:auto;margin-bottom:4px}
+.pfoot{display:flex;justify-content:space-between;align-items:baseline;padding:13px 16px;border-top:1px solid var(--line)}
+.pf-name{font:400 16px/1 var(--serif)}
+.pf-price{font:600 13px/1 var(--sans)}
+
+/* ============ ritual ============ */
+.ritual{background:var(--cream-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:104px 0 118px}
+.rit-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(44px,6vw,90px);align-items:start}
+.rit-left{position:sticky;top:110px}
+.rit-left h2{font:400 clamp(2.2rem,4vw,3.3rem)/1.04 var(--serif);letter-spacing:-.015em;margin:14px 0 6px}
+.rit-fig{margin-top:38px;max-width:440px}
+.rit-img{border-radius:999px 999px 12px 12px;overflow:hidden;position:relative;border:1px solid var(--line)}
+.rit-img img{width:100%;display:block;filter:grayscale(1) contrast(1.06) brightness(1.03)}
+.rit-img::after{content:'';position:absolute;inset:0;background:#6C2732;mix-blend-mode:multiply;opacity:.32}
+.rit-fig figcaption{margin-top:14px;font:600 10px/1.6 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft)}
+.rit-steps{padding-left:clamp(0px,4vw,56px)}
+.rit-step{display:grid;grid-template-columns:76px 1fr;gap:26px;padding:38px 0;border-top:1px solid var(--line)}
+.rit-step:first-child{border-top:0;padding-top:10px}
+.rit-no{font:italic 400 44px/1 var(--serif);color:var(--ox)}
+.rit-time{font:600 10px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft)}
+.rit-step h3{font:400 25px/1.15 var(--serif);margin:8px 0 12px}
+.rit-step p{font-size:15.5px;line-height:1.7;color:var(--ink-soft);max-width:52ch}
+
+/* ============ voices ============ */
+.voices{padding:108px 0 116px}
+.voices .wrap{max-width:980px}
+.voices blockquote{margin:64px 0 0}
+.voices blockquote:first-of-type{margin-top:42px}
+.vq{font:italic 400 clamp(1.5rem,3vw,2.1rem)/1.28 var(--serif);letter-spacing:-.01em}
+.vq::before{content:'“';color:var(--ox)}
+.vq::after{content:'”';color:var(--ox)}
+.voices blockquote:nth-of-type(2) .vq{font-size:clamp(1.9rem,4vw,2.8rem)}
+.voices blockquote:nth-of-type(2){margin-left:16%}
+.voices blockquote:nth-of-type(3){margin-left:6%}
+.voices cite{display:block;font:600 11px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);font-style:normal;margin-top:18px}
+
+/* ============ notes ============ */
+.notes{padding:100px 0 112px}
+.notes .note{border-bottom:1px solid var(--line)}
+.notes .rows-top{border-top:1px solid var(--line)}
+.note-head{display:grid;grid-template-columns:118px 1fr auto 40px;gap:20px;align-items:center;width:100%;padding:26px 0;text-align:left}
+.nd{font:600 11px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft)}
+.nt{font:400 clamp(1.3rem,2.4vw,1.65rem)/1.1 var(--serif);letter-spacing:-.01em;transition:color .25s}
+.note-head:hover .nt{color:var(--ox)}
+.nm{font:600 10px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft)}
+.nx{width:36px;height:36px;border:1px solid var(--line);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:transform .35s,border-color .25s}
+.nx svg{width:11px;height:11px}
+.note.open .nx{transform:rotate(45deg);border-color:var(--ink)}
+.note-body{max-height:0;overflow:hidden;transition:max-height .5s cubic-bezier(.22,1,.3,1)}
+.note-body p{max-width:64ch;padding:2px 0 14px 138px;color:var(--ink-soft);font-size:15.5px;line-height:1.75}
+.note-body p+p{margin-top:6px}
+
+/* ============ the evening post ============ */
+.post{background:var(--ox);color:var(--cream);padding:108px 0}
+.post-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(40px,6vw,90px);align-items:center}
+.post .kicker{color:rgba(245,239,226,.65)}
+.post .kicker::after{background:rgba(245,239,226,.25)}
+.post h2{font:italic 400 clamp(2.2rem,4.4vw,3.5rem)/1.06 var(--serif);letter-spacing:-.015em}
+.post-copy{margin-top:22px;max-width:46ch;font-size:15.5px;line-height:1.7;color:rgba(245,239,226,.85)}
+.pfield label{display:block;font:600 10px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:rgba(245,239,226,.6);margin-bottom:8px}
+#postEmail{width:100%;background:transparent;border:0;border-bottom:1px solid rgba(245,239,226,.45);padding:12px 2px;font:italic 400 22px/1.2 var(--serif);color:var(--cream);border-radius:0}
+#postEmail::placeholder{color:rgba(245,239,226,.45)}
+#postEmail:focus{outline:none;border-bottom-color:var(--cream)}
+#postErr{font-size:12.5px;color:#F2C4B0;margin-top:9px;min-height:17px}
+.post .btn-primary{background:var(--cream);color:var(--ink);border-color:var(--cream);margin-top:26px}
+.post .btn-primary:hover{background:transparent;color:var(--cream)}
+.post small{display:block;margin-top:20px;font-size:11.5px;line-height:1.6;color:rgba(245,239,226,.6);max-width:44ch}
+.post-done{display:flex;gap:18px;align-items:flex-start;border:1px solid rgba(245,239,226,.35);padding:26px}
+.pd-ic{width:36px;height:36px;border-radius:50%;border:1px solid rgba(245,239,226,.5);display:flex;align-items:center;justify-content:center;flex:0 0 36px}
+.pd-ic svg{width:13px;height:13px}
+.post-done h4{font:italic 400 23px/1.2 var(--serif)}
+.post-done p{margin-top:8px;font-size:14.5px;line-height:1.65;color:rgba(245,239,226,.8)}
+
+/* ============ footer ============ */
+.foot{background:var(--ink);color:#EFE8D9;padding:88px 0 34px}
+.wordmark{font:460 clamp(4.2rem,13vw,12.5rem)/0.82 var(--serif);letter-spacing:.06em;border-bottom:1px solid rgba(239,232,217,.22);padding-bottom:42px;margin-bottom:58px}
+.f-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1.1fr;gap:40px}
+.f-grid h5{font:600 10px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:rgba(239,232,217,.5);margin-bottom:16px}
+.f-addr{font-size:14px;line-height:1.85;color:rgba(239,232,217,.75)}
+.f-addr a{color:#EFE8D9;text-decoration:underline;text-underline-offset:3px}
+.f-grid li a,.f-link{display:block;width:100%;text-align:left;padding:5px 0;font-size:14px;color:rgba(239,232,217,.78);transition:color .25s}
+.f-grid li a:hover,.f-link:hover{color:#EFE8D9;text-decoration:underline;text-underline-offset:3px}
+.f-bar{margin-top:64px;border-top:1px solid rgba(239,232,217,.18);padding-top:22px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+.f-bar p{font-size:11px;letter-spacing:.06em;color:rgba(239,232,217,.55)}
+.f-right{display:flex;align-items:center;gap:18px}
+.f-right span{font:600 10px/1 var(--sans);letter-spacing:.18em;text-transform:uppercase;color:rgba(239,232,217,.55)}
+#toTop{width:44px;height:44px;border:1px solid rgba(239,232,217,.35);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#EFE8D9;transition:background .3s,color .3s,border-color .3s}
+#toTop:hover{background:#EFE8D9;color:var(--ink);border-color:#EFE8D9}
+#toTop svg{width:12px;height:12px}
+
+/* ============ bag drawer ============ */
+.veil{position:fixed;inset:0;background:rgba(34,29,22,.34);z-index:200;opacity:0;pointer-events:none;transition:opacity .35s}
+.veil.on{opacity:1;pointer-events:auto}
+.bag{position:fixed;top:0;right:0;height:100%;width:min(430px,94vw);background:var(--cream);z-index:210;border-left:1px solid var(--line);display:flex;flex-direction:column;transform:translateX(103%);transition:transform .45s cubic-bezier(.22,1,.3,1)}
+.bag.on{transform:none}
+.bag-head{display:flex;justify-content:space-between;align-items:flex-start;padding:22px 24px 16px;border-bottom:1px solid var(--line)}
+.bag-head h3{font:400 26px/1 var(--serif)}
+.bag-sub{font:600 10px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);margin-top:9px}
+.iconbtn{width:38px;height:38px;border:1px solid var(--line);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:border-color .25s,background .25s,color .25s}
+.iconbtn:hover{background:var(--ink);color:var(--cream);border-color:var(--ink)}
+.iconbtn svg{width:12px;height:12px}
+.bag-main{flex:1;display:flex;flex-direction:column;min-height:0}
+.ship{padding:16px 24px 4px}
+.ship p{font:600 11px/1.4 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:10px}
+.meter{height:4px;background:var(--line)}
+.meter i{display:block;height:100%;width:0;background:var(--ox);transition:width .5s cubic-bezier(.22,1,.3,1)}
+.bag-list{flex:1;overflow-y:auto;padding:6px 24px}
+.bitem{display:grid;grid-template-columns:64px 1fr auto;gap:16px;padding:18px 0;border-bottom:1px solid var(--line);align-items:center}
+.bthumb{width:64px;height:80px;border-radius:32px 32px 5px 5px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.bthumb svg{height:86%;width:auto}
+.binfo h4{font:400 16.5px/1.2 var(--serif)}
+.bmeta{font:600 10px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);margin:6px 0 12px}
+.qty{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:999px}
+.qty button{width:28px;height:28px;display:flex;align-items:center;justify-content:center;transition:background .2s}
+.qty button:hover{background:var(--cream-2)}
+.qty svg{width:10px;height:10px}
+.qty span{min-width:30px;text-align:center;font:600 13px/1 var(--sans)}
+.bright{text-align:right}
+.bright b{font:600 14px/1 var(--sans)}
+.bright b,.bremove{display:block;margin-left:auto}
+.bremove{font-size:11px;color:var(--ink-soft);text-decoration:underline;text-underline-offset:2px;margin-top:10px}
+.bag-empty{display:none;flex:1;flex-direction:column;align-items:center;justify-content:center;gap:4px;text-align:center;padding:30px}
+.bag.empty .bag-empty{display:flex}
+.bag.empty .bag-foot,.bag.empty .ship{display:none}
+.be-ill svg{width:86px;height:auto;margin-bottom:14px}
+.be-t{font:italic 400 23px/1.2 var(--serif)}
+.be-s{font-size:13.5px;color:var(--ink-soft);margin:8px 0 22px}
+.bag-foot{border-top:1px solid var(--line);padding:20px 24px 22px}
+.subrow{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:16px}
+.subrow span{font:600 11px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft)}
+.subrow b{font:400 24px/1 var(--serif)}
+.bag-foot .btn-primary{width:100%;justify-content:center}
+.bag-note{margin-top:14px;text-align:center;font-size:11px;letter-spacing:.04em;color:var(--ink-soft)}
+.bag-till{display:none;flex:1;flex-direction:column;justify-content:center;gap:18px;padding:36px 32px;text-align:center}
+.bag.till .bag-till{display:flex}
+.bag.till .bag-main,.bag.till .bag-head{display:none}
+.stamp{align-self:center;border:1.5px dashed var(--ox);color:var(--ox);font:700 13px/1 var(--sans);letter-spacing:.3em;text-transform:uppercase;padding:12px 20px 12px 24px;transform:rotate(-3deg)}
+.bag-till h4{font:400 27px/1.1 var(--serif)}
+.bag-till p{font-size:14.5px;line-height:1.7;color:var(--ink-soft);max-width:34ch;margin:0 auto}
+.till-btns{display:flex;flex-direction:column;gap:12px;margin-top:8px}
+.till-btns .btn-primary,.till-btns .btn-ghost{width:100%;justify-content:center}
+
+/* ============ toast ============ */
+.toast{position:fixed;left:22px;bottom:22px;z-index:300;background:var(--ink);color:var(--cream);display:flex;align-items:center;gap:13px;padding:12px 18px 12px 12px;border-radius:10px;box-shadow:0 14px 34px rgba(0,0,0,.28);transform:translateY(150%);transition:transform .45s cubic-bezier(.22,1,.3,1);max-width:min(420px,calc(100vw - 44px))}
+.toast.on{transform:none}
+.t-ic{width:27px;height:27px;border-radius:50%;background:var(--ox);display:flex;align-items:center;justify-content:center;flex:0 0 27px}
+.t-ic svg{width:11px;height:11px}
+#toastMsg{font-size:13px;line-height:1.4}
+#toastBag{font:600 11px/1 var(--sans);letter-spacing:.1em;text-transform:uppercase;text-decoration:underline;text-underline-offset:3px;margin-left:4px;white-space:nowrap;color:var(--cream)}
+
+/* ============ responsive ============ */
+@media (max-width:1020px){
+  .hero-grid{grid-template-columns:1fr}
+  .stage{justify-self:center;margin-top:14px}
+  .hero{min-height:0}
+  .sec-head{grid-template-columns:1fr;gap:16px}
+  .row{grid-template-columns:54px 1fr 86px 50px}
+  .row-note{display:none}
+  .rit-grid{grid-template-columns:1fr}
+  .rit-left{position:static}
+  .post-grid{grid-template-columns:1fr;gap:44px}
+  .f-grid{grid-template-columns:1fr 1fr}
+}
+@media (max-width:720px){
+  .nav{display:none}
+  .mbtn{display:flex}
+  .row{grid-template-columns:38px 1fr 72px 44px;gap:14px;min-height:88px}
+  .row-name h3{font-size:19px}
+  .chips{overflow-x:auto;padding-bottom:6px}
+  .schip{flex:0 0 58px}
+  .chipcard{left:-8px;top:52px;transform:rotate(6deg) scale(.86)}
+  .voices blockquote{margin-left:0 !important}
+  .note-head{grid-template-columns:72px 1fr auto 34px;gap:12px}
+  .nt{font-size:18px}
+  .note-body p{padding-left:0}
+  .rit-step{grid-template-columns:48px 1fr;gap:18px}
+  .bitem{grid-template-columns:56px 1fr auto;gap:12px}
+  .peek{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  [data-reveal]{opacity:1 !important;transform:none !important;transition:none}
+  .band-track{animation:none}
+  html{scroll-behavior:auto}
+  .spark{animation:none}
+}
+</style>
+</head>
+<body>
+
+<div class="ticker">Free UK delivery over £40 &nbsp;·&nbsp; Cruelty-free, always &nbsp;·&nbsp; Made &amp; filled in Hackney E8</div>
+
+<header id="hd">
+  <div class="wrap h-in">
+    <a class="logo" href="#top" aria-label="Vesper — home">VESPER</a>
+    <nav class="nav" aria-label="Primary">
+      <a href="#index">The Index</a>
+      <a href="#ritual">The Ritual</a>
+      <a href="#notes">Notes</a>
+      <a href="#post">The Post</a>
+    </nav>
+    <div class="h-actions">
+      <button class="bagbtn" id="bagBtn" aria-label="Open your bag">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4.2 6.5h11.6l1 8.3H3.2l1-8.3z"/><path d="M7 6.5V6a3 3 0 0 1 6 0v.5"/></svg>
+        <span>Bag</span><b id="bagCount">0</b>
+      </button>
+      <button class="mbtn" id="menuBtn" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+  <nav class="mnav" aria-label="Mobile">
+    <a href="#index">The Index</a>
+    <a href="#ritual">The Ritual</a>
+    <a href="#notes">Notes</a>
+    <a href="#post">The Post</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <!-- ============ hero ============ -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow" data-reveal>Est. Hackney E8 — MMXIX — Cruelty-free</p>
+        <h1 data-reveal style="--d:.06s">Made up.<br>Made in<br><em>London.</em></h1>
+        <p class="lede" data-reveal style="--d:.12s">Small-batch colour and skin goods, formulated in one Hackney studio and posted through your letterbox. The tins come back to us — refills cost less than firsts.</p>
+        <div class="cta" data-reveal style="--d:.18s">
+          <button class="btn-primary" id="heroAdd">
+            <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 1.5v11M1.5 7h11"/></svg>
+            <span id="heroAddLabel">Add the Bullet — Soho · £26</span>
+          </button>
+          <a class="link-arrow" href="#index">The full index
+            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M6 1.5v8.5M2.5 6.5L6 10l3.5-3.5"/></svg>
+          </a>
+        </div>
+        <div data-reveal style="--d:.24s">
+          <p class="shades-label">The Bullet — pick a shade</p>
+          <div class="chips" id="chips"></div>
+          <p class="shade-blurb" id="shadeBlurb">“A scarlet with intent.”</p>
+        </div>
+      </div>
+
+      <div class="stage" data-reveal style="--d:.15s">
+        <div class="arch-wrap">
+          <span class="spark s1"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0l2.4 9.6L24 12l-9.6 2.4L12 24l-2.4-9.6L0 12l9.6-2.4z"/></svg></span>
+          <span class="spark s2"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0l2.4 9.6L24 12l-9.6 2.4L12 24l-2.4-9.6L0 12l9.6-2.4z"/></svg></span>
+          <div class="arch" id="archTint">
+            <svg class="lip" viewBox="0 0 220 300" aria-hidden="true">
+              <ellipse cx="110" cy="287" rx="66" ry="6" fill="#221D16" opacity=".1"/>
+              <path class="bshade" d="M86 152 V54 Q86 40 98 38 L134 62 V152 Z" fill="#B23A3F"/>
+              <path d="M93 152 V64 Q93 54 99 52 L104 58 V152 Z" fill="#FFFFFF" opacity=".26"/>
+              <path d="M110 46 L134 62 V152 H110 Z" fill="#000000" opacity=".08"/>
+              <rect x="82" y="150" width="56" height="48" fill="#D2B978"/>
+              <rect x="70" y="176" width="80" height="24" rx="3" fill="#C6A15B"/>
+              <rect x="70" y="192" width="80" height="5" fill="#9A7B3F"/>
+              <rect x="78" y="198" width="64" height="84" rx="8" fill="#221D16"/>
+              <rect x="86" y="208" width="5" height="62" fill="#FFFFFF" opacity=".08"/>
+              <circle cx="110" cy="240" r="3.2" fill="#C6A15B"/>
+            </svg>
+          </div>
+          <div class="chipcard" id="chipCard">
+            <div class="cc-colour" id="chipColour"></div>
+            <div class="cc-meta"><em id="chipName">Soho</em><span id="chipCode">The Bullet · S/01</span></div>
+          </div>
+        </div>
+        <p class="arch-cap">The Bullet No. 01 · refillable brass case · 12 shades</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ marquee band ============ -->
+  <div class="band" aria-hidden="true">
+    <div class="band-track">
+      <div class="band-half">
+        <span>Cruelty-free</span><span>Vegan formulas</span><span>Small batch</span><span>Made &amp; filled in Hackney E8</span><span>Letterbox-friendly tins</span><span>Refill &amp; return</span>
+      </div>
+      <div class="band-half">
+        <span>Cruelty-free</span><span>Vegan formulas</span><span>Small batch</span><span>Made &amp; filled in Hackney E8</span><span>Letterbox-friendly tins</span><span>Refill &amp; return</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ the index ============ -->
+  <section id="index" class="index">
+    <div class="wrap">
+      <p class="kicker" data-reveal>01 — Everything we make</p>
+      <div class="sec-head">
+        <h2 data-reveal>The Index.</h2>
+        <p data-reveal style="--d:.1s">Six things. That's the whole range — we make fewer, better, and every formula is built and filled by hand in E8. No line extensions for the sake of it.</p>
+      </div>
+      <div class="rows" id="rows"></div>
+    </div>
+  </section>
+
+  <!-- ============ the ritual ============ -->
+  <section id="ritual" class="ritual">
+    <div class="wrap rit-grid">
+      <div class="rit-left">
+        <p class="kicker" data-reveal>02 — The P.M. ritual</p>
+        <h2 data-reveal>How London takes the day off.</h2>
+        <figure class="rit-fig" data-reveal>
+          <div class="rit-img"><img src="https://picsum.photos/seed/vesper-hackney/720/900.jpg" alt="The Vesper studio fill line at dawn"></div>
+          <figcaption>The fill line, Hackney E8 — 6 a.m.</figcaption>
+        </figure>
+      </div>
+      <div class="rit-steps">
+        <div class="rit-step" data-reveal>
+          <span class="rit-no">01</span>
+          <div>
+            <p class="rit-time">21:38 — Cleanse</p>
+            <h3>Take the day off twice.</h3>
+            <p>The city leaves a residue: particulate, pollen, the general atmosphere of the Northern line. An oil cleanse lifts it; a cream cleanse makes sure. Two washes, one face, zero tightness.</p>
+          </div>
+        </div>
+        <div class="rit-step" data-reveal style="--d:.08s">
+          <span class="rit-no">02</span>
+          <div>
+            <p class="rit-time">21:46 — Colour</p>
+            <h3>Put the flush back.</h3>
+            <p>Central heating takes what the commute didn't. Cheek Occasion, warmed between fingertips, pressed high on the cheekbone. You're not adding colour so much as returning it.</p>
+          </div>
+        </div>
+        <div class="rit-step" data-reveal style="--d:.16s">
+          <span class="rit-no">03</span>
+          <div>
+            <p class="rit-time">21:54 — Finish</p>
+            <h3>Press, don't paint.</h3>
+            <p>The Bullet isn't a brush situation. Press the bullet to the lip, tap the excess out with a knuckle, and get on with your evening. One coat is the whole idea.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ voices ============ -->
+  <section class="voices">
+    <div class="wrap">
+      <p class="kicker" data-reveal>03 — Word of mouth</p>
+      <blockquote data-reveal>
+        <p class="vq">The only lipstick my mother and I have ever agreed on.</p>
+        <cite>— Ada, Peckham</cite>
+      </blockquote>
+      <blockquote data-reveal>
+        <p class="vq">I have three now. I've stopped explaining myself.</p>
+        <cite>— Priya, Manchester</cite>
+      </blockquote>
+      <blockquote data-reveal>
+        <p class="vq">Ordered Tuesday, wore it Thursday. The Royal Mail did me proud.</p>
+        <cite>— Sam, Glasgow</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- ============ notes ============ -->
+  <section id="notes" class="notes">
+    <div class="wrap">
+      <p class="kicker" data-reveal>04 — Notes from the studio</p>
+      <div class="sec-head">
+        <h2 data-reveal>The Notes.</h2>
+        <p data-reveal style="--d:.1s">Longer thinking on colour, regulation, and 6 a.m. batches. No tips, no listicles — the letters we'd write anyway.</p>
+      </div>
+      <div class="rows-top"></div>
+      <article class="note" data-reveal>
+        <button class="note-head" aria-expanded="false">
+          <span class="nd">04 Feb 2025</span>
+          <span class="nt">On red, and nerve</span>
+          <span class="nm">4 min</span>
+          <span class="nx"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 1.5v11M1.5 7h11"/></svg></span>
+        </button>
+        <div class="note-body">
+          <p>Soho didn't start as a red. It started as a complaint — a customer in the shop telling us that every “bright” shade she owned read pink on her, and every “true red” read orange. We made her a red with a drop more blue in the base, and she wore it out of the shop before we'd labelled it.</p>
+          <p>Every shade since has gone through the same door: someone real, a specific complaint, a formula rebuilt until the complaint disappears. Nerve, we've found, is half the product.</p>
+        </div>
+      </article>
+      <article class="note" data-reveal style="--d:.06s">
+        <button class="note-head" aria-expanded="false">
+          <span class="nd">21 Jan 2025</span>
+          <span class="nt">“Clean beauty” — what it legally means (and doesn't)</span>
+          <span class="nm">7 min</span>
+          <span class="nx"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 1.5v11M1.5 7h11"/></svg></span>
+        </button>
+        <div class="note-body">
+          <p>Here's the uncomfortable bit: in the UK and the EU, “clean” isn't a regulated term. Anyone can print it. What is regulated — heavily — is the safety assessment behind every formula, the CPSR, which every product we make files before it's ever filled.</p>
+          <p>So when a brand leans on the word “clean” and not on its documentation, squint. Our full CPSR summaries ship with every order — dull reading, but it's the only kind that counts.</p>
+        </div>
+      </article>
+      <article class="note" data-reveal style="--d:.12s">
+        <button class="note-head" aria-expanded="false">
+          <span class="nd">09 Dec 2024</span>
+          <span class="nt">6 a.m. in Hackney — a day on the fill line</span>
+          <span class="nm">3 min</span>
+          <span class="nx"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 1.5v11M1.5 7h11"/></svg></span>
+        </button>
+        <div class="note-body">
+          <p>The fill line runs before the bakery next door does. Bullets get poured at temperature, cooled for forty minutes, then weighed — every single one — on the same brass scale. Underweight bullets go back into the pot; there's no “close enough” pile.</p>
+          <p>By noon the day's batch is boxed, and the tins are stamped by hand with the date they were made. If yours says a Tuesday, it was a Tuesday.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ the evening post ============ -->
+  <section id="post" class="post">
+    <div class="wrap post-grid">
+      <div>
+        <p class="kicker" data-reveal>05 — The Evening Post</p>
+        <h2 data-reveal>One letter a month.<br>First Thursday.</h2>
+        <p class="post-copy" data-reveal style="--d:.08s">New batches before they're listed, formulas that failed and why, and first refusal on small runs. That's the whole offer — we're not a newsletter, we're a correspondence.</p>
+      </div>
+      <div id="postWrap" data-reveal style="--d:.14s">
+        <form id="postForm" novalidate>
+          <div class="pfield">
+            <label for="postEmail">Your address</label>
+            <input type="email" id="postEmail" placeholder="you@somewhere.london" autocomplete="email">
+          </div>
+          <p id="postErr" role="alert"></p>
+          <button class="btn-primary" type="submit">Take the post</button>
+          <small>No noise, no countdown timers. Unsubscribing is one click and zero guilt.</small>
+        </form>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ footer ============ -->
+<footer class="foot">
+  <div class="wrap">
+    <p class="wordmark" data-reveal>VESPER</p>
+    <div class="f-grid">
+      <div>
+        <h5>The Studio</h5>
+        <p class="f-addr">
+          Unit 4, Hoxton Works<br>9 Orsman Road, London N1 5QJ<br><br>
+          <a href="mailto:hello@vesperbeauty.co.uk">hello@vesperbeauty.co.uk</a><br>
+          Mon–Fri, 9–6 — we answer.<br><br>
+          <span style="font:600 10px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:rgba(239,232,217,.5)">Also found at</span><br>
+          Liberty, Carnaby St · Cosmethica, Redchurch St · Monogram, Glasgow
+        </p>
+      </div>
+      <div>
+        <h5>Shop</h5>
+        <ul>
+          <li><a href="#index">The Bullet</a></li>
+          <li><a href="#index">Second Skin</a></li>
+          <li><a href="#index">Cheek Occasion</a></li>
+          <li><a href="#index">Brow Parliament</a></li>
+          <li><a href="#index">Smoke Signal</a></li>
+          <li><a href="#index">Lacquer Lacuna</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Studio</h5>
+        <ul>
+          <li><a href="#ritual">The Ritual</a></li>
+          <li><a href="#notes">The Notes</a></li>
+          <li><a href="#post">The Evening Post</a></li>
+          <li><button class="f-link" data-toast="Send tins back with any order — refills cost less, and postage is on us.">Refill &amp; return</button></li>
+        </ul>
+      </div>
+      <div>
+        <h5>House</h5>
+        <ul>
+          <li><button class="f-link" id="footBag">Your bag</button></li>
+          <li><button class="f-link" data-toast="Royal Mail Tracked 48. Free over £40. 30-day returns on anything unopened.">Delivery &amp; returns</button></li>
+          <li><button class="f-link" data-toast="Full INCI lists are printed on every carton — no surprises, no fine print.">Ingredients</button></li>
+          <li><a href="mailto:hello@vesperbeauty.co.uk">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="f-bar">
+      <p>© MMXXV Vesper Beauty Ltd · VAT included · Registered in England &amp; Wales</p>
+      <div class="f-right">
+        <span>Made in London — no exceptions</span>
+        <button id="toTop" aria-label="Back to top"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M6 10.5V2M2.5 5.5L6 2l3.5 3.5"/></svg></button>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- cursor-follow preview -->
+<div class="peek" id="peek" aria-hidden="true"></div>
+
+<!-- bag drawer -->
+<div class="veil" id="veil"></div>
+<aside class="bag empty" id="bag" aria-label="Your bag" aria-hidden="true">
+  <div class="bag-head">
+    <div>
+      <h3>Your bag</h3>
+      <p class="bag-sub" id="bagSubC">0 items</p>
+    </div>
+    <button class="iconbtn" id="bagClose" aria-label="Close bag">
+      <svg viewBox="0 0 14 14" stroke="currentColor" stroke-width="1.5"><path d="M2 2l10 10M12 2L2 12"/></svg>
+    </button>
+  </div>
+  <div class="bag-main">
+    <div class="ship">
+      <p id="meterCap">£40 from free UK delivery.</p>
+      <div class="meter"><i id="meterFill"></i></div>
+    </div>
+    <ul class="bag-list" id="bagList"></ul>
+    <div class="bag-empty" id="bagEmpty">
+      <div class="be-ill" id="beIll"></div>
+      <p class="be-t">Nothing in here yet.</p>
+      <p class="be-s">The Bullet is a fine place to start.</p>
+      <button class="btn-primary" id="emptyGo">Open the index</button>
+    </div>
+    <div class="bag-foot">
+      <div class="subrow"><span>Subtotal</span><b id="bagSub">£0</b></div>
+      <button class="btn-primary" id="checkoutBtn">Checkout · <span id="coTotal">£0</span></button>
+      <p class="bag-note">VAT included · Royal Mail Tracked 48 · Free over £40</p>
+    </div>
+  </div>
+  <div class="bag-till">
+    <div class="stamp">Demo till</div>
+    <h4>No card was charged.</h4>
+    <p>This storefront is a lookbook — the till exists so you can push it. Your bag will keep whatever you gave it.</p>
+    <div class="till-btns">
+      <button class="btn-primary" id="tillBrowse">Keep browsing</button>
+      <button class="btn-ghost" id="tillReset">Empty the bag</button>
+    </div>
+  </div>
+</aside>
+
+<!-- toast -->
+<div class="toast" id="toast" role="status" aria-live="polite">
+  <span class="t-ic" id="toastIc"></span>
+  <span id="toastMsg">Added to your bag.</span>
+  <button id="toastBag">View bag</button>
+</div>
+
+<script>
+/* ================= data ================= */
+const SHADES=[
+  {name:'Soho',       code:'S/01', hex:'#B23A3F', tint:'#E8CFC7', blurb:'A scarlet with intent.'},
+  {name:'Mayfair',    code:'S/02', hex:'#C2907A', tint:'#EFE2D4', blurb:'Rosewood, worn soft.'},
+  {name:'Shoreditch', code:'S/03', hex:'#5E2634', tint:'#D9C3C0', blurb:'Oxblood, after midnight.'},
+  {name:'Primrose',   code:'S/04', hex:'#DA9AA3', tint:'#F2DDDA', blurb:'Hill pink at six a.m.'},
+  {name:'Peckham',    code:'S/05', hex:'#B0602F', tint:'#E7CBB4', blurb:'Terracotta, sunlit.'},
+];
+let cur=0, bulletHex=SHADES[0].hex;
+
+/* flat editorial product illustrations — all drawn, no photos */
+const ILL={
+  lipstick:h=>`<svg viewBox="0 0 220 300" aria-hidden="true">
+    <ellipse cx="110" cy="287" rx="66" ry="6" fill="#221D16" opacity=".1"/>
+    <path d="M86 152 V54 Q86 40 98 38 L134 62 V152 Z" fill="${h}"/>
+    <path d="M93 152 V64 Q93 54 99 52 L104 58 V152 Z" fill="#FFFFFF" opacity=".26"/>
+    <path d="M110 46 L134 62 V152 H110 Z" fill="#000000" opacity=".08"/>
+    <rect x="82" y="150" width="56" height="48" fill="#D2B978"/>
+    <rect x="70" y="176" width="80" height="24" rx="3" fill="#C6A15B"/>
+    <rect x="70" y="192" width="80" height="5" fill="#9A7B3F"/>
+    <rect x="78" y="198" width="64" height="84" rx="8" fill="#221D16"/>
+    <rect x="86" y="208" width="5" height="62" fill="#FFFFFF" opacity=".08"/>
+    <circle cx="110" cy="240" r="3.2" fill="#C6A15B"/></svg>`,
+  bottle:h=>`<svg viewBox="0 0 220 300" aria-hidden="true">
+    <ellipse cx="110" cy="285" rx="58" ry="6" fill="#221D16" opacity=".1"/>
+    <rect x="82" y="50" width="56" height="54" rx="9" fill="#221D16"/>
+    <rect x="88" y="60" width="8" height="38" rx="4" fill="#FFFFFF" opacity=".1"/>
+    <rect x="90" y="102" width="40" height="22" fill="#C6A15B"/>
+    <rect x="64" y="122" width="92" height="162" rx="14" fill="#EFE7D4" stroke="#221D16" stroke-width="2"/>
+    <rect x="72" y="182" width="76" height="94" rx="10" fill="${h}"/>
+    <rect x="72" y="182" width="14" height="94" rx="7" fill="#FFFFFF" opacity=".2"/>
+    <rect x="64" y="148" width="92" height="48" fill="#F5EFE2" stroke="#221D16" stroke-width="2"/>
+    <rect x="82" y="162" width="48" height="5" fill="#221D16"/>
+    <rect x="82" y="174" width="30" height="4" fill="#221D16" opacity=".5"/></svg>`,
+  compact:h=>`<svg viewBox="0 0 220 300" aria-hidden="true">
+    <ellipse cx="110" cy="282" rx="72" ry="6" fill="#221D16" opacity=".1"/>
+    <circle cx="110" cy="152" r="84" fill="#221D16"/>
+    <circle cx="110" cy="152" r="70" fill="#C6A15B"/>
+    <circle cx="110" cy="152" r="60" fill="#F5EFE2"/>
+    <circle cx="110" cy="152" r="40" fill="${h}"/>
+    <path d="M84 128 A38 38 0 0 1 122 114" stroke="#FFFFFF" stroke-width="6" fill="none" stroke-linecap="round" opacity=".28"/>
+    <rect x="96" y="60" width="28" height="12" rx="5" fill="#9A7B3F"/></svg>`,
+  pencil:(body,tip)=>`<svg viewBox="0 0 220 300" aria-hidden="true">
+    <ellipse cx="110" cy="288" rx="56" ry="5" fill="#221D16" opacity=".1"/>
+    <g transform="rotate(-24 110 160)">
+      <rect x="96" y="88" width="28" height="146" fill="${body}"/>
+      <rect x="96" y="88" width="7" height="146" fill="#FFFFFF" opacity=".18"/>
+      <path d="M96 90 L110 36 L124 90 Z" fill="#E7DCC4"/>
+      <path d="M104 63 L110 36 L116 63 Z" fill="${tip}"/>
+      <rect x="90" y="232" width="40" height="18" rx="4" fill="#221D16"/>
+    </g></svg>`,
+  nail:h=>`<svg viewBox="0 0 220 300" aria-hidden="true">
+    <ellipse cx="110" cy="288" rx="50" ry="5" fill="#221D16" opacity=".1"/>
+    <rect x="86" y="42" width="48" height="88" rx="9" fill="#221D16"/>
+    <rect x="92" y="50" width="8" height="72" rx="4" fill="#FFFFFF" opacity=".12"/>
+    <rect x="92" y="128" width="36" height="22" fill="#EFE7D4" stroke="#221D16" stroke-width="2"/>
+    <path d="M92 148 H128 L148 180 V230 Q148 264 114 264 H106 Q72 264 72 230 V180 Z" fill="${h}"/>
+    <path d="M110 148 H128 L148 180 H110 Z" fill="#000000" opacity=".1"/>
+    <rect x="84" y="186" width="12" height="72" rx="6" fill="#FFFFFF" opacity=".22"/></svg>`
+};
+
+const PRODUCTS=[
+  {id:'bullet',no:'01',name:'The Bullet',      cat:'Refillable bullet lipstick · 12 shades', price:26, note:'One coat, no mirror required. Brass case for life; refills £14 by post.', hex:'#B23A3F', tint:'#E8CFC7', make:()=>ILL.lipstick(bulletHex)},
+  {id:'skin',  no:'02',name:'Second Skin',     cat:'Serum foundation · 14 shades',            price:32, note:'Coverage like a good rumour: thin, but it travels.',                   hex:'#E3C39A', tint:'#F0E6D2', make:()=>ILL.bottle('#E3C39A')},
+  {id:'cheek', no:'03',name:'Cheek Occasion',  cat:'Cream blush in a returnable tin',          price:24, note:'Flushed, never flustered. Melts in, stays for the evening.',          hex:'#D97F72', tint:'#F1D6CF', make:()=>ILL.compact('#D97F72')},
+  {id:'brow',  no:'04',name:'Brow Parliament', cat:'Mechanical brow pencil',                  price:16, note:'Fine tip, firm hand. Two houses, one shape.',                          hex:'#8A6A4C', tint:'#E9DFC9', make:()=>ILL.pencil('#8A6A4C','#3E2E1F')},
+  {id:'kohl',  no:'05',name:'Smoke Signal',    cat:'Soft kohl · smudge on purpose',           price:19, note:'For lids with opinions. Sharpens with any sharpener you own.',        hex:'#221D16', tint:'#E9E3D4', make:()=>ILL.pencil('#221D16','#000000')},
+  {id:'nail',  no:'06',name:'Lacquer Lacuna',  cat:'Nail lacquer · ten quiet finishes',       price:14, note:'Chip-resistant, ten-minute dry, letterbox-friendly bottle.',          hex:'#6C2732', tint:'#E3D0C6', make:()=>ILL.nail('#6C2732')},
+];
+
+const IC={
+  plus:'<svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 1.5v11M1.5 7h11"/></svg>',
+  minus:'<svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 6h8"/></svg>',
+  check:'<svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M2 7.6l3.3 3.3L12 3.6"/></svg>'
+};
+
+/* ================= helpers ================= */
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const hd=$('#hd'), chipsEl=$('#chips'), rowsEl=$('#rows'), peek=$('#peek'),
+      archTint=$('#archTint'), chipColour=$('#chipColour'), chipName=$('#chipName'),
+      chipCode=$('#chipCode'), chipCard=$('#chipCard'), heroAddLabel=$('#heroAddLabel'),
+      shadeBlurb=$('#shadeBlurb'), heroLipShade=document.querySelector('.lip .bshade'),
+      bag=$('#bag'), veil=$('#veil'), bagList=$('#bagList'), badge=$('#bagCount'),
+      bagSubC=$('#bagSubC'), bagSub=$('#bagSub'), coTotal=$('#coTotal'),
+      meterFill=$('#meterFill'), meterCap=$('#meterCap'),
+      toastEl=$('#toast'), toastMsg=$('#toastMsg');
+const cart=new Map();
+const fine=matchMedia('(pointer:fine) and (hover:hover)').matches;
+
+/* ================= toast ================= */
+let toastTimer;
+function toast(msg){
+  toastMsg.textContent=msg;
+  toastEl.classList.add('on');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>toastEl.classList.remove('on'),3400);
+}
+ $('#toastIc').innerHTML=IC.check;
+ $('#toastBag').addEventListener('click',()=>{openBag();toastEl.classList.remove('on');});
+
+/* ================= hero: shade picker ================= */
+chipsEl.innerHTML=SHADES.map((s,i)=>`
+  <button class="schip${i===0?' on':''}" data-i="${i}" aria-label="Shade ${s.name}">
+    <span class="schip-colour" style="background:${s.hex}"></span>
+    <span class="schip-name">${s.name}</span>
+  </button>`).join('');
+
+chipsEl.addEventListener('click',e=>{
+  const c=e.target.closest('.schip');
+  if(c) setShade(+c.dataset.i);
+});
+
+function setShade(i){
+  cur=i; const s=SHADES[i]; bulletHex=s.hex;
+  heroLipShade.setAttribute('fill',s.hex);
+  archTint.style.background=s.tint;
+  chipColour.style.background=s.hex;
+  chipName.textContent=s.name;
+  chipCode.textContent='The Bullet · '+s.code;
+  heroAddLabel.textContent=`Add the Bullet — ${s.name} · £26`;
+  shadeBlurb.textContent=`\u201C${s.blurb}\u201D`;
+  chipsEl.querySelectorAll('.schip').forEach((c,j)=>c.classList.toggle('on',j===i));
+  const c0=peek.querySelector('.pcard[data-p="0"]');
+  if(c0){const m=c0.querySelector('.pmedia');m.style.background=s.tint;m.innerHTML=ILL.lipstick(s.hex);}
+}
+setShade(0);
+
+/* gentle parallax on the arch (fine pointers only) */
+if(fine){
+  const hero=$('.hero'), lipSvg=$('.lip');
+  hero.addEventListener('mousemove',e=>{
+    const r=hero.getBoundingClientRect();
+    const nx=(e.clientX-r.left)/r.width-.5, ny=(e.clientY-r.top)/r.height-.5;
+    lipSvg.style.transform=`translate(${nx*8}px,${ny*6}px) rotate(${nx*1.2}deg)`;
+    chipCard.style.transform=`rotate(6deg) translate(${nx*-10}px,${ny*-8}px)`;
+  });
+  hero.addEventListener('mouseleave',()=>{
+    lipSvg.style.transform='';chipCard.style.transform='rotate(6deg)';
+  });
+}
+
+/* ================= the index ================= */
+rowsEl.innerHTML=PRODUCTS.map((p,i)=>`
+  <article class="row" data-i="${i}" data-reveal style="--d:${(i*.05).toFixed(2)}s">
+    <span class="row-no">${p.no}</span>
+    <div class="row-name">
+      <h3>${p.name}</h3>
+      <p class="row-cat"><i class="dot" style="background:${p.hex}"></i>${p.cat}</p>
+    </div>
+    <p class="row-note">${p.note}</p>
+    <span class="row-price">£${p.price}</span>
+    <button class="addbtn" data-add="${p.id}" aria-label="Add ${p.name} to bag">
+      <span class="i-plus">${IC.plus}</span>
+      <span class="i-check">${IC.check}</span>
+    </button>
+  </article>`).join('');
+
+/* ================= cursor-follow preview ================= */
+peek.innerHTML=PRODUCTS.map((p,i)=>`
+  <div class="pcard" data-p="${i}">
+    <div class="pmedia" style="background:${p.tint}">${p.make()}</div>
+    <div class="pfoot"><span class="pf-name">${p.name}</span><span class="pf-price">£${p.price}</span></div>
+  </div>`).join('');
+const pcards=[...peek.querySelectorAll('.pcard')];
+
+if(fine){
+  let tX=innerWidth/2,tY=innerHeight/2,cX=tX,cY=tY,rot=0;
+  addEventListener('mousemove',e=>{tX=e.clientX;tY=e.clientY;},{passive:true});
+  (function loop(){
+    cX+=(tX-cX)*.14; cY+=(tY-cY)*.14;
+    const dx=tX-cX;
+    rot+=(Math.max(-8,Math.min(8,dx*.08))-rot)*.1;
+    const W=252; let ox=26;
+    if(cX+ox+W>innerWidth-14) ox=-(W+26);
+    const px=Math.min(innerWidth-W-10,Math.max(10,cX+ox));
+    const py=Math.max(12,Math.min(innerHeight-360,cY-200));
+    peek.style.transform=`translate3d(${px}px,${py}px,0) rotate(${rot}deg)`;
+    requestAnimationFrame(loop);
+  })();
+  rowsEl.addEventListener('mouseover',e=>{
+    const row=e.target.closest('.row'); if(!row)return;
+    const i=+row.dataset.i;
+    pcards.forEach(c=>c.classList.toggle('on',+c.dataset.p===i));
+    peek.classList.add('on');
+  });
+  rowsEl.addEventListener('mouseleave',()=>peek.classList.remove('on'));
+}
+
+/* ================= bag ================= */
+function renderBag(){
+  const items=[...cart.values()];
+  const count=items.reduce((a,b)=>a+b.qty,0);
+  const sub=items.reduce((a,b)=>a+b.qty*b.price,0);
+  badge.textContent=count;
+  bagSubC.textContent=`${count} item${count===1?'':'s'}`;
+  bag.classList.toggle('empty',count===0);
+  bagSub.textContent='£'+sub; coTotal.textContent='£'+sub;
+  meterFill.style.width=Math.min(100,sub/40*100)+'%';
+  meterCap.textContent=sub>=40?'Free UK delivery — unlocked.':(sub===0?'£40 from free UK delivery.':`£${40-sub} from free UK delivery.`);
+  bagList.innerHTML=items.map(it=>`
+    <li class="bitem" data-key="${it.key}">
+      <div class="bthumb" style="background:${it.tint}">${it.svg}</div>
+      <div class="binfo">
+        <h4>${it.name}</h4>
+        <p class="bmeta">£${it.price} each</p>
+        <div class="qty">
+          <button data-q="-1" aria-label="Decrease quantity">${IC.minus}</button>
+          <span>${it.qty}</span>
+          <button data-q="1" aria-label="Increase quantity">${IC.plus}</button>
+        </div>
+      </div>
+      <div class="bright"><b>£${it.qty*it.price}</b><button class="bremove" data-remove>Remove</button></div>
+    </li>`).join('');
+}
+function bump(){badge.classList.remove('bump');void badge.offsetWidth;badge.classList.add('bump');}
+function addToCart(o){
+  const ex=cart.get(o.key);
+  if(ex) ex.qty++; else cart.set(o.key,{...o,qty:1});
+  renderBag(); bump(); toast(`Added to your bag — ${o.name}`);
+}
+function addBullet(){
+  const s=SHADES[cur];
+  addToCart({key:'bullet:'+s.name,name:`The Bullet — ${s.name}`,price:26,tint:s.tint,svg:ILL.lipstick(s.hex)});
+}
+ $('#heroAdd').addEventListener('click',addBullet);
+rowsEl.addEventListener('click',e=>{
+  const b=e.target.closest('.addbtn'); if(!b)return;
+  const p=PRODUCTS.find(x=>x.id===b.dataset.add); if(!p)return;
+  if(p.id==='bullet') addBullet();
+  else addToCart({key:p.id,name:p.name,price:p.price,tint:p.tint,svg:p.make()});
+  b.classList.add('did'); clearTimeout(b._t);
+  b._t=setTimeout(()=>b.classList.remove('did'),1100);
+});
+bagList.addEventListener('click',e=>{
+  const li=e.target.closest('.bitem'); if(!li)return;
+  const it=cart.get(li.dataset.key); if(!it)return;
+  if(e.target.closest('[data-remove]')){cart.delete(it.key);renderBag();return;}
+  const q=e.target.closest('[data-q]');
+  if(q){it.qty+=+q.dataset.q;if(it.qty<1)cart.delete(it.key);renderBag();}
+});
+
+function openBag(){
+  bag.classList.add('on');veil.classList.add('on');
+  bag.setAttribute('aria-hidden','false');
+  document.body.style.overflow='hidden';
+  peek.classList.remove('on');
+}
+function closeBag(){
+  bag.classList.remove('on','till');veil.classList.remove('on');
+  bag.setAttribute('aria-hidden','true');
+  document.body.style.overflow='';
+}
+ $('#bagBtn').addEventListener('click',openBag);
+ $('#footBag').addEventListener('click',openBag);
+ $('#bagClose').addEventListener('click',closeBag);
+veil.addEventListener('click',closeBag);
+ $('#checkoutBtn').addEventListener('click',()=>bag.classList.add('till'));
+ $('#tillBrowse').addEventListener('click',()=>bag.classList.remove('till'));
+ $('#tillReset').addEventListener('click',()=>{cart.clear();renderBag();bag.classList.remove('till');toast('The bag is empty again.');});
+ $('#emptyGo').addEventListener('click',()=>{closeBag();$('#index').scrollIntoView({behavior:'smooth'});});
+ $('#beIll').innerHTML=ILL.lipstick('#B23A3F');
+renderBag();
+
+/* ================= notes accordions ================= */
+ $$('.note-head').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const n=btn.parentElement, open=n.classList.toggle('open');
+    const body=n.querySelector('.note-body');
+    body.style.maxHeight=open?body.scrollHeight+'px':'0px';
+    btn.setAttribute('aria-expanded',open);
+  });
+});
+
+/* ================= the evening post ================= */
+ $('#postForm').addEventListener('submit',e=>{
+  e.preventDefault();
+  const email=$('#postEmail'), err=$('#postErr'), v=email.value.trim();
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)){
+    err.textContent='That address doesn\u2019t look quite right — mind checking it?';
+    email.focus(); return;
+  }
+  err.textContent='';
+  $('#postWrap').innerHTML=`<div class="post-done">
+    <span class="pd-ic">${IC.check}</span>
+    <div><h4>You\u2019re on the list.</h4>
+    <p>The first Thursday is yours. Nothing else will happen — that\u2019s rather the point.</p></div>
+  </div>`;
+  toast('Welcome to The Evening Post.');
+});
+
+/* ================= chrome: header, menu, misc ================= */
+addEventListener('scroll',()=>hd.classList.toggle('sc',scrollY>8),{passive:true});
+const menuBtn=$('#menuBtn');
+menuBtn.addEventListener('click',()=>{
+  const open=hd.classList.toggle('menu-open');
+  menuBtn.setAttribute('aria-expanded',open);
+});
+ $$('.mnav a').forEach(a=>a.addEventListener('click',()=>hd.classList.remove('menu-open')));
+addEventListener('keydown',e=>{
+  if(e.key==='Escape'){closeBag();hd.classList.remove('menu-open');}
+});
+ $('#toTop').addEventListener('click',()=>scrollTo({top:0,behavior:'smooth'}));
+ $$('[data-toast]').forEach(el=>el.addEventListener('click',e=>{e.preventDefault();toast(el.dataset.toast);}));
+
+/* ================= reveal on scroll ================= */
+const io=new IntersectionObserver(es=>es.forEach(en=>{
+  if(en.isIntersecting){en.target.classList.add('rev-in');io.unobserve(en.target);}
+}),{threshold:.12,rootMargin:'0px 0px -6% 0px'});
+ $$('[data-reveal]').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
